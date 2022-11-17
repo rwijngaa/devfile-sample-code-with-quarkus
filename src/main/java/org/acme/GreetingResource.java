@@ -5,7 +5,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Map;
 import java.util.stream.IntStream;
 
@@ -31,11 +33,13 @@ public class GreetingResource {
     @Path("{flightNr}/{travelTime}")
     @Produces(MediaType.TEXT_PLAIN)
     public COLOR hello(@PathParam("flightNr") String flightNr, @PathParam("travelTime") Integer travelTime) {
+
+        LocalTime now = LocalDateTime.now(ZoneId.of("Europe/Madrid")).toLocalTime();
         final LocalTime departureTime = flights.get(flightNr);
-        if (LocalTime.now().plusMinutes(travelTime).isBefore(departureTime.minusHours(2))) {
+        if (now.plusMinutes(travelTime).isBefore(departureTime.minusHours(2))) {
             // Huidige tijd + reistijd < inchecktijd
             return COLOR.RED;
-        } else if (!LocalTime.now().isBefore(departureTime.minusHours(2))) {
+        } else if (!now.isBefore(departureTime.minusHours(2))) {
             // Huidige tijd >= inchecktijd
             return COLOR.GREEN;
         }
@@ -46,6 +50,6 @@ public class GreetingResource {
     @Path("currentTime")
     @Produces(MediaType.TEXT_PLAIN)
     public LocalTime currentTime() {
-        return LocalTime.now();
+        return LocalDateTime.now(ZoneId.of("Europe/Madrid")).toLocalTime();
     }
 }
