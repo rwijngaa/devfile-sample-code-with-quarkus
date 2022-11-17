@@ -41,4 +41,11 @@ public class GreetingResource {
         }
         return COLOR.YELLOW;
     }
+
+    @GET
+    @Path("currentTime")
+    @Produces(MediaType.TEXT_PLAIN)
+    public LocalTime currentTime() {
+        return LocalTime.now();
+    }
 }
