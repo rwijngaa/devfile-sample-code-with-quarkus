@@ -31,7 +31,6 @@ public class GreetingResource {
     @Path("{flightNr}/{travelTime}")
     @Produces(MediaType.TEXT_PLAIN)
     public COLOR hello(@PathParam("flightNr") String flightNr, @PathParam("travelTime") Integer travelTime) {
-        System.out.println("Hello Schiphol: " + flightNr + ", travelTime=" + travelTime);
         final LocalTime departureTime = flights.get(flightNr);
         if (LocalTime.now().plusMinutes(travelTime).isBefore(departureTime.minusHours(2))) {
             // Huidige tijd + reistijd < inchecktijd
