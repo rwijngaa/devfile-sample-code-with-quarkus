@@ -50,6 +50,7 @@ public class GreetingResource {
     @Path("currentTime")
     @Produces(MediaType.TEXT_PLAIN)
     public LocalTime currentTime() {
+        System.out.println("test");
         return LocalDateTime.now(ZoneId.of("Europe/Madrid")).toLocalTime();
     }
 }
